@@ -18,19 +18,19 @@ export class Confirm extends Component {
 
   render() {
     const {
-      values: { firstName, lastName, email, occupation, city, bio }
+      values: { firstName, lastName, email, city, item, description }
     } = this.props;
     return (
       <MuiThemeProvider>
         <React.Fragment>
-          <AppBar title="Confirm User Data" />
+          <AppBar title="Confirm Your Details" />
           <List>
-            <ListItem primaryText="First Name" secondaryText={firstName} />
-            <ListItem primaryText="Last Name" secondaryText={lastName} />
-            <ListItem primaryText="Email" secondaryText={email} />
-            <ListItem primaryText="Occupation" secondaryText={occupation} />
-            <ListItem primaryText="City" secondaryText={city} />
-            <ListItem primaryText="Bio" secondaryText={bio} />
+            <ListItem primaryText="First Name: " secondaryText={firstName} />
+            <ListItem primaryText="Last Name: " secondaryText={lastName} />
+            <ListItem primaryText="Email:" secondaryText={email} />
+            <ListItem primaryText="City: " secondaryText={city} />
+            <ListItem primaryText="Item: " secondaryText={item} />
+            <ListItem primaryText="Description: " secondaryText={description} />
           </List>
           <br />
           <RaisedButton
