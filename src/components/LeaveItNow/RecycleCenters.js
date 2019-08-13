@@ -1,76 +1,69 @@
 import React, { Component } from 'react';
-import FormUserDetails from '../LeaveItLater/FormUserDetails';
-import FormPersonalDetails from '../LeaveItLater/FormPersonalDetails';
-import Confirm from './Confirm';
-import Success from './Success';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
-export class UserForm extends Component {
-  state = {
-    step: 1,
-    firstName: '',
-    lastName: '',
-    email: '',
-    city: '',
-    item: '',
-    description: ''
+export class FormPersonalDetails extends Component {
+  continue = e => {
+    e.preventDefault();
+    this.props.nextStep();
   };
 
-  // Proceed to next step
-  nextStep = () => {
-    const { step } = this.state;
-    this.setState({
-      step: step + 1
-    });
-  };
-
-  // Go back to prev step
-  prevStep = () => {
-    const { step } = this.state;
-    this.setState({
-      step: step - 1
-    });
-  };
-
-  // Handle fields change
-  handleChange = input => e => {
-    this.setState({ [input]: e.target.value });
+  back = e => {
+    e.preventDefault();
+    this.props.prevStep();
   };
 
   render() {
-    const { step } = this.state;
-    const { firstName, lastName, email, city, item, description } = this.state;
-    const values = { firstName, lastName, email, city, item, description };
-
-    switch (step) {
-      case 1:
-        return (
-          <FormUserDetails
-            nextStep={this.nextStep}
-            handleChange={this.handleChange}
-            values={values}
+    const { values, handleChange } = this.props;
+    return (
+      <MuiThemeProvider>
+        <React.Fragment>
+          <AppBar title="Take It!" />
+          <TextField
+            hintText="Zip Code"
+            floatingLabelText="Your City"
+            onChange={handleChange('city')}
+            defaultValue={values.city}
           />
-        );
-      case 2:
-        return (
-          <FormPersonalDetails
-            nextStep={this.nextStep}
-            prevStep={this.prevStep}
-            handleChange={this.handleChange}
-            values={values}
+          <br />
+          <TextField
+            hintText="Item"
+            floatingLabelText="Item name"
+            onChange={handleChange('item')}
+            defaultValue={values.item}
           />
-        );
-      case 3:
-        return (
-          <Confirm
-            nextStep={this.nextStep}
-            prevStep={this.prevStep}
-            values={values}
+          <br />
+          <TextField
+            hintText="Description"
+            floatingLabelText="Item description"
+            onChange={handleChange('description')}
+            defaultValue={values.description}
           />
-        );
-      case 4:
-        return <Success />;
-    }
+          <br />
+          <RaisedButton
+            label="Continue"
+            primary={true}
+            style={styles.button}
+            onClick={this.continue}
+          />
+          <RaisedButton
+            label="Back"
+            primary={false}
+            style={styles.button}
+            onClick={this.back}
+          />
+        </React.Fragment>
+      </MuiThemeProvider>
+    );
   }
 }
 
-export default UserForm;
+const styles = {
+  button: {
+    margin: 15
+  }
+};
+
+export default FormPersonalDetails;
